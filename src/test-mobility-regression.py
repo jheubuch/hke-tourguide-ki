@@ -188,31 +188,33 @@ print(dtf.head())
 # firstJan = dtf[dtf["Bucket"] == "2020-01-01"]
 # firstJan.to_csv("jan_1.csv", sep=',')
 
-exit()
-
 
 # define clusters (for example workingday/weekend)
-x = "MSSubClass"
-MSSubClass_clusters = {"min": [30, 45, 180], "max": [60, 120], "mean": []}
+x = "DoW"
+DoW_clusters = {"wo": ["Monday", "Tuesday", "Wednesday",
+                       "Thursday", "Friday"], "we": ["Saturday", "Sunday"]}
 # create new columns
-dic_flat = {v: k for k, lst in MSSubClass_clusters.items() for v in lst}
-for k, v in MSSubClass_clusters.items():
+dic_flat = {v: k for k, lst in DoW_clusters.items() for v in lst}
+for k, v in DoW_clusters.items():
     if len(v) == 0:
         residual_class = k
-dtf[x+"_cluster"] = dtf[x].apply(lambda x: dic_flat[x] if x in
-                                 dic_flat.keys() else residual_class)
+dtf[x+"_class"] = dtf[x].apply(lambda x: dic_flat[x] if x in
+                               dic_flat.keys() else residual_class)
 
 # create dummy
-dummy = pd.get_dummies(dtf["MSSubClass_cluster"],
-                       prefix="MSSubClass_cluster", drop_first=True)
+dummy = pd.get_dummies(dtf["DoW_class"],
+                       prefix="DoW_class", drop_first=False)
 dtf = pd.concat([dtf, dummy], axis=1)
 # drop the original categorical column
-dtf = dtf.drop("MSSubClass_cluster", axis=1)
-dtf = dtf.drop("MSSubClass", axis=1)
+dtf = dtf.drop("DoW_class", axis=1)
+# dtf = dtf.drop("DoW", axis=1)
 
 # # Fill missing data
 # dtf["LotFrontage"].fillna(
 #     dtf["LotFrontage"].mean())
+
+print(dtf.head(50))
+exit()
 
 dtf_scaled, scalerX, scalerY = scaleData(dtf, "Y")
 
