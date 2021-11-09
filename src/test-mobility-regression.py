@@ -19,6 +19,9 @@ from sklearn.ensemble import GradientBoostingClassifier
 # for explainer
 from lime import lime_tabular
 
+# for date
+import datetime
+
 
 '''
 Recognize whether a column is numerical or categorical.
@@ -46,6 +49,9 @@ def prepareDtf(dtf):
     dtf = dtf[dtf['Bucket'].str.len() == 10]
     dtf = dtf.groupby(["Bucket", "EndId", "EndName"])[
         "Count"].sum().reset_index()
+
+    dtf["DoW"] = dtf["Bucket"].apply(
+        lambda bucket: pd.to_datetime(bucket).day_name())
 
     return dtf
 
@@ -177,11 +183,9 @@ dtf = pd.read_csv("mobilityDataAllgau.csv")
 
 dtf = prepareDtf(dtf)
 
+print(dtf.head())
+
 # firstJan = dtf[dtf["Bucket"] == "2020-01-01"]
-# firstJan.to_csv("jan_0.csv", sep=',')
-
-
-firstJan = dtf[dtf["Bucket"] == "2020-01-01"]
 # firstJan.to_csv("jan_1.csv", sep=',')
 
 exit()
