@@ -53,6 +53,8 @@ def prepareDtf(dtf):
     dtf["DoW"] = dtf["Bucket"].apply(
         lambda bucket: pd.to_datetime(bucket).day_name())
 
+    dtf = dtf.rename(columns={"Count": "Y"})
+
     return dtf
 
 
@@ -188,40 +190,57 @@ print(dtf.head())
 # firstJan = dtf[dtf["Bucket"] == "2020-01-01"]
 # firstJan.to_csv("jan_1.csv", sep=',')
 
-exit()
-
 
 # define clusters (for example workingday/weekend)
-x = "MSSubClass"
-MSSubClass_clusters = {"min": [30, 45, 180], "max": [60, 120], "mean": []}
+x = "DoW"
+DoW_clusters = {"we": ["Saturday", "Sunday"], "wo": ["Monday", "Tuesday", "Wednesday",
+                                                     "Thursday", "Friday"]}
 # create new columns
-dic_flat = {v: k for k, lst in MSSubClass_clusters.items() for v in lst}
-for k, v in MSSubClass_clusters.items():
+dic_flat = {v: k for k, lst in DoW_clusters.items() for v in lst}
+for k, v in DoW_clusters.items():
     if len(v) == 0:
         residual_class = k
-dtf[x+"_cluster"] = dtf[x].apply(lambda x: dic_flat[x] if x in
-                                 dic_flat.keys() else residual_class)
+dtf[x+"_class"] = dtf[x].apply(lambda x: dic_flat[x] if x in
+                               dic_flat.keys() else residual_class)
 
-# create dummy
-dummy = pd.get_dummies(dtf["MSSubClass_cluster"],
-                       prefix="MSSubClass_cluster", drop_first=True)
+# create dummies DoW_class
+dummy = pd.get_dummies(dtf["DoW_class"],
+                       prefix="DoW_class", drop_first=False)
 dtf = pd.concat([dtf, dummy], axis=1)
 # drop the original categorical column
-dtf = dtf.drop("MSSubClass_cluster", axis=1)
-dtf = dtf.drop("MSSubClass", axis=1)
+dtf = dtf.drop("DoW_class", axis=1)
+
+# create dummies DoW
+dummy = pd.get_dummies(dtf["DoW"],
+                       prefix="DoW", drop_first=False)
+dtf = pd.concat([dtf, dummy], axis=1)
+# drop the original categorical column
+dtf = dtf.drop("DoW", axis=1)
+
+# create dummes EndId
+dummy = pd.get_dummies(dtf["EndId"],
+                       prefix="EndId", drop_first=False)
+dtf = pd.concat([dtf, dummy], axis=1)
+# drop the original categorical column
+# dtf = dtf.drop("EndId", axis=1)
 
 # # Fill missing data
 # dtf["LotFrontage"].fillna(
 #     dtf["LotFrontage"].mean())
 
-dtf_scaled, scalerX, scalerY = scaleData(dtf, "Y")
+print(dtf.head(50))
+
+# dtf_scaled, scalerX, scalerY = scaleData(dtf, "Y")
+dtf_scaled = dtf
 
 # split data
 dtfTrain, dtfTest = model_selection.train_test_split(dtf_scaled,
-                                                     test_size=0.1)
+                                                     test_size=0.3)
 
 # define training and test features
-X_names = ['OverallQual', 'GrLivArea', 'TotalBsmtSF', "GarageCars"]
+DoWColumns = [col for col in dtf if col.startswith('DoW_')]
+EndIdColumns = [col for col in dtf if col.startswith('EndId_')]
+X_names = DoWColumns + EndIdColumns
 X_train = dtfTrain[X_names].values
 Y_train = dtfTrain["Y"].values
 X_test = dtfTest[X_names].values
@@ -239,7 +258,7 @@ model.fit(X_train, Y_train)
 predicted = model.predict(X_test)
 
 # unscale data to compare with actual data
-predicted, Y_test = unscaleData(scalerY, predicted, Y_test)
+# predicted, Y_test = unscaleData(scalerY, predicted, Y_test)
 
 printKPI(predicted, Y_test)
 
