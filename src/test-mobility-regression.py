@@ -183,20 +183,21 @@ def plotResidualDistribution(residuals):
     ax.set(yticks=[], yticklabels=[], title="Residuals distribution")
     plt.show()
 
-def getHolidays():
+
+def getHolidays(year):
     # Request free days from Feiertage API for year 2021 in bavaria
-    free_days = requests.get('https://feiertage-api.de/api/?jahr=2021&nur_land=BY')
+    free_days = requests.get(
+        f'https://feiertage-api.de/api/?jahr={year}&nur_land=BY')
 
     # Parse result and store as [key, val] dict
     free_days = free_days.json()
 
     free_day_dates = []
 
-    # Iterate over 
+    # Iterate over
     for free_day_name in free_days:
-        free_day_dates.push(free_days[free_day_name]['datum'])
-        # print(f'{free_day_date}: {free_day_name}')
-    
+        free_day_dates.append(free_days[free_day_name]['datum'])
+
     return free_day_dates
 
 
@@ -210,24 +211,32 @@ print(dtf.head())
 # firstJan.to_csv("jan_1.csv", sep=',')
 
 
-# define clusters (for example workingday/weekend)
-x = "DoW"
-DoW_clusters = {"we": ["Saturday", "Sunday"], "wo": ["Monday", "Tuesday", "Wednesday",
-                                                     "Thursday", "Friday"]}
-# create new columns
-dic_flat = {v: k for k, lst in DoW_clusters.items() for v in lst}
-for k, v in DoW_clusters.items():
+# define clusters (workingday/weekend)
+x = "Day"
+Day_clusters = {"free": ["Saturday", "Sunday"], "work": ["Monday", "Tuesday", "Wednesday",
+                                                         "Thursday", "Friday"]}
+# create DoW_class columns
+dic_flat = {v: k for k, lst in Day_clusters.items() for v in lst}
+for k, v in Day_clusters.items():
     if len(v) == 0:
         residual_class = k
-dtf[x+"_class"] = dtf[x].apply(lambda x: dic_flat[x] if x in
-                               dic_flat.keys() else residual_class)
+dtf[x+"_class"] = dtf['DoW'].apply(lambda x: dic_flat[x] if x in
+                                   dic_flat.keys() else residual_class)
 
 # create dummies DoW_class
-dummy = pd.get_dummies(dtf["DoW_class"],
-                       prefix="DoW_class", drop_first=False)
+dummy = pd.get_dummies(dtf["Day_class"],
+                       prefix="Day_class", drop_first=True)
 dtf = pd.concat([dtf, dummy], axis=1)
+# holidays = getHolidays(dtf['Bucket'].iloc(0)[:4])
+holidays = getHolidays('2020')
+for day in holidays:
+    dtf.loc[(dtf.Bucket == day), 'Day_class_work'] = 0
+    # dtf[dtf['Bucket'] == day]['Day_class_work'] = 0
 # drop the original categorical column
-dtf = dtf.drop("DoW_class", axis=1)
+dtf = dtf.drop("Day_class", axis=1)
+
+print(dtf.head)
+
 
 # create dummies DoW
 dummy = pd.get_dummies(dtf["DoW"],
@@ -235,6 +244,7 @@ dummy = pd.get_dummies(dtf["DoW"],
 dtf = pd.concat([dtf, dummy], axis=1)
 # drop the original categorical column
 dtf = dtf.drop("DoW", axis=1)
+
 
 # create dummes EndId
 dummy = pd.get_dummies(dtf["EndId"],
@@ -258,8 +268,9 @@ dtfTrain, dtfTest = model_selection.train_test_split(dtf_scaled,
 
 # define training and test features
 DoWColumns = [col for col in dtf if col.startswith('DoW_')]
+DayColumns = [col for col in dtf if col.startswith('Day_')]
 EndIdColumns = [col for col in dtf if col.startswith('EndId_')]
-X_names = DoWColumns + EndIdColumns
+X_names = DoWColumns + DayColumns + EndIdColumns
 X_train = dtfTrain[X_names].values
 Y_train = dtfTrain["Y"].values
 X_test = dtfTest[X_names].values
