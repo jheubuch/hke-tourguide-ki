@@ -22,6 +22,9 @@ from lime import lime_tabular
 # for date
 import datetime
 
+# for HTTP
+import requests
+
 
 '''
 Recognize whether a column is numerical or categorical.
@@ -179,6 +182,22 @@ def plotResidualDistribution(residuals):
     ax.grid(True)
     ax.set(yticks=[], yticklabels=[], title="Residuals distribution")
     plt.show()
+
+def getHolidays():
+    # Request free days from Feiertage API for year 2021 in bavaria
+    free_days = requests.get('https://feiertage-api.de/api/?jahr=2021&nur_land=BY')
+
+    # Parse result and store as [key, val] dict
+    free_days = free_days.json()
+
+    free_day_dates = []
+
+    # Iterate over 
+    for free_day_name in free_days:
+        free_day_dates.push(free_days[free_day_name]['datum'])
+        # print(f'{free_day_date}: {free_day_name}')
+    
+    return free_day_dates
 
 
 dtf = pd.read_csv("mobilityDataAllgau.csv")
