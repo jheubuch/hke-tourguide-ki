@@ -22,3 +22,26 @@ Mean Absolute Perc Error (Σ(|y-pred|/y)/n): 91.9 %
 Mean Absolute Error (Σ|y-pred|/n): 1,586
 Root Mean Squared Error (sqrt(Σ(y-pred)^2/n)): 10,739
 Max Error: -370,094
+
+---------------------------------------------------------------------------
+
+DoWColumns = [col for col in dtf if col.startswith('DoW_')]
+DayColumns = [col for col in dtf if col.startswith('Day_')]
+EndIdColumns = [col for col in dtf if col.startswith('EndId_')]
+X_names = DoWColumns + DayColumns + EndIdColumns
+
+R2 (explained variance): 93.8 %
+Mean Absolute Perc Error (Σ(|y-pred|/y)/n): 91.7 %
+Mean Absolute Error (Σ|y-pred|/n): 1,543
+Root Mean Squared Error (sqrt(Σ(y-pred)^2/n)): 10,546
+Max Error: -319,978
+
+---------------------------------------------------------------------------
+With Scaling
+
+R2 (explained variance): 94.19999999999999 %
+Mean Absolute Perc Error (Σ(|y-pred|/y)/n): 92.0 %
+Mean Absolute Error (Σ|y-pred|/n): 1,472
+Root Mean Squared Error (sqrt(Σ(y-pred)^2/n)): 9,859
+Max Error: -298,788
+

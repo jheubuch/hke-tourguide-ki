@@ -259,22 +259,24 @@ dtf = pd.concat([dtf, dummy], axis=1)
 
 print(dtf.head(50))
 
-# dtf_scaled, scalerX, scalerY = scaleData(dtf, "Y")
-dtf_scaled = dtf
-
-# split data
-dtfTrain, dtfTest = model_selection.train_test_split(dtf_scaled,
-                                                     test_size=0.3)
-
 # define training and test features
 DoWColumns = [col for col in dtf if col.startswith('DoW_')]
 DayColumns = [col for col in dtf if col.startswith('Day_')]
 EndIdColumns = [col for col in dtf if col.startswith('EndId_')]
 X_names = DoWColumns + DayColumns + EndIdColumns
+
+relevantDtf = dtf[X_names + ["Y"]]
+dtf_scaled, scalerX, scalerY = scaleData(relevantDtf, "Y")
+
+# split data
+dtfTrain, dtfTest = model_selection.train_test_split(dtf_scaled,
+                                                     test_size=0.3)
+
 X_train = dtfTrain[X_names].values
 Y_train = dtfTrain["Y"].values
 X_test = dtfTest[X_names].values
 Y_test = dtfTest["Y"].values
+
 
 # call model
 # model = linear_model.LinearRegression()
@@ -288,7 +290,7 @@ model.fit(X_train, Y_train)
 predicted = model.predict(X_test)
 
 # unscale data to compare with actual data
-# predicted, Y_test = unscaleData(scalerY, predicted, Y_test)
+predicted, Y_test = unscaleData(scalerY, predicted, Y_test)
 
 printKPI(predicted, Y_test)
 
