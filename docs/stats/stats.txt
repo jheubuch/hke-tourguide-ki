@@ -5,10 +5,6 @@ R2 (explained variance): 92.0 %
 Mean Absolute Perc Error (Σ(|y-pred|/y)/n): 94.39999999999999 %
 Mean Absolute Error (Σ|y-pred|/n): 2,120
 Root Mean Squared Error (sqrt(Σ(y-pred)^2/n)): 11,510
-R2 (explained variance): 92.0 %
-Mean Absolute Perc Error (Σ(|y-pred|/y)/n): 94.39999999999999 %
-Mean Absolute Error (Σ|y-pred|/n): 2,120
-Root Mean Squared Error (sqrt(Σ(y-pred)^2/n)): 11,510
 Max Error: 292,702
 
 --------------------------------------------------------------------------
@@ -44,4 +40,14 @@ Mean Absolute Perc Error (Σ(|y-pred|/y)/n): 92.0 %
 Mean Absolute Error (Σ|y-pred|/n): 1,472
 Root Mean Squared Error (sqrt(Σ(y-pred)^2/n)): 9,859
 Max Error: -298,788
+
+---------------------------------------------------------------------------
+
+With travelling
+
+R2 (explained variance): 93.89999999999999 %
+Mean Absolute Perc Error (Σ(|y-pred|/y)/n): 91.4 %
+Mean Absolute Error (Σ|y-pred|/n): 1,515
+Root Mean Squared Error (sqrt(Σ(y-pred)^2/n)): 10,030
+Max Error: 284,887
 
