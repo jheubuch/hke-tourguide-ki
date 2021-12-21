@@ -51,3 +51,12 @@ Mean Absolute Error (Σ|y-pred|/n): 1,515
 Root Mean Squared Error (sqrt(Σ(y-pred)^2/n)): 10,030
 Max Error: 284,887
 
+---------------------------------------------------------------------------
+
+With weather (maxTemp, precip)
+
+R2 (explained variance): 96.2 %
+Mean Absolute Perc Error (Σ(|y-pred|/y)/n): 89.0 %
+Mean Absolute Error (Σ|y-pred|/n): 1,450
+Root Mean Squared Error (sqrt(Σ(y-pred)^2/n)): 8,821
+Max Error: -295,629
