@@ -5,8 +5,6 @@ import datetime
 import pickle
 import meteostat as met
 
-from mobility_train_model import getTravellingDates
-
 
 def isTravellingDate(date):
     travellingDates = getTravellingDates(datetime.datetime.strptime(date, "%Y-%m-%d").year)
@@ -15,6 +13,36 @@ def isTravellingDate(date):
 def isWorkDay(datestring):
     freeDays =  ["Saturday", "Sunday"]
     return not (datetime.datetime.strptime(datestring, "%Y-%m-%d").strftime("%A") in freeDays)
+
+def getHolidays(year):
+    # Request free days from Feiertage API for year 2021 in bavaria
+    holidays = requests.get(
+    f'https://ferien-api.de/api/v1/holidays/BY/{year}')
+
+    # Parse result and store as [key, val] dict
+    holidays = holidays.json()
+
+    holiday_dates = []
+
+    # Iterate over
+    for holiday in holidays:
+        holiday_dates.append((holiday['start'], holiday['end']))
+
+    return holiday_dates
+
+def getTravellingDates(year, timespan=4): 
+    holiday_dates = getHolidays(year)
+
+    travelling_datestrings = []
+
+    for date in holiday_dates:
+        start = datetime.datetime.strptime(date[0], "%Y-%m-%dT%H:%MZ")
+        end = datetime.datetime.strptime(date[1], "%Y-%m-%dT%H:%MZ")
+        for i in range(0, timespan-1, 1):
+            travelling_datestrings.append(datetime.datetime.strftime(start + datetime.timedelta(days=i), "%Y-%m-%d"))
+            travelling_datestrings.append(datetime.datetime.strftime(end - datetime.timedelta(days=i),"%Y-%m-%d" ))
+
+    return travelling_datestrings
 
 def getWeatherForDateAndPoint(date, point, desired_data = ['tmax', 'prcp']):
     weather_data = met.Daily(point, date, date).fetch()
