@@ -1,5 +1,5 @@
 **.csv
-src/mobilityPredictionModel.sav
 **.pyc
-src/mobilityPredictionModelStd.sav
+**.sav
 src/mobility_model_demo.py
+data/mobilityDataAllgau_extended_dummies.zip
