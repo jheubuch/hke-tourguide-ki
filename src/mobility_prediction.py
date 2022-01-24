@@ -4,6 +4,7 @@ import os.path
 import datetime
 import pickle
 import meteostat as met
+import requests
 
 
 def isTravellingDate(date):
@@ -55,7 +56,7 @@ def getWeatherForDateAndPoint(date, point, desired_data = ['tmax', 'prcp']):
 
 def getPredictionDataStructure(numberOfRows):
     # Load csv with data structure
-    dataFileName ="../data/mobilityDataAllgau_extended_dummies.csv"
+    dataFileName ="../data/mobilityData_complete.csv"
     if os.path.isfile(dataFileName):
         dtf = pd.read_csv(dataFileName)
     else:

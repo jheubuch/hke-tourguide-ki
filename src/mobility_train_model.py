@@ -294,7 +294,7 @@ def addWeatherData(dtf, districts):
 
 
 print("Starting")
-dtf = pd.read_csv("../data/mobilityDataAllgau.csv")
+dtf = pd.read_csv("../data/mobilityData.csv")
 dtf = prepareDtf(dtf)
 print("Completed mobility data loading")
 
@@ -312,7 +312,7 @@ districts.head()
 
 getWeatherData(dtf, districts)
 addWeatherData(dtf, districts)
-dtf.to_csv("../data/mobilityDataAllgau_extended_weather.csv")
+dtf.to_csv("../data/mobilityData_extended_weather.csv")
 print("Completed weather data preparation")
 
 
@@ -374,12 +374,12 @@ print("Completed dataset preparation")
 
 
 # Save extended data
-dtf.to_csv("../data/mobilityDataAllgau_extended_dummies.csv")
+dtf.to_csv("../data/mobilityData_complete.csv")
 
 
 
 # Load extended data
-dtf = pd.read_csv("../data/mobilityDataAllgau_extended_dummies.csv")
+dtf = pd.read_csv("../data/data/mobilityData_complete.csv")
 dtf.head()
 
 
