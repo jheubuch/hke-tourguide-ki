@@ -4,11 +4,22 @@ Im Folgenden wird die Verwendung der relevanten Methoden aus `mobility_predictio
 <br>
 <br>
 
+# Voraussetzungen
+
+- `mobility_train_model.py` muss mindestens ein Mal erfolgreich ausgeführt worden sein. Hierbei werden für die Vorhersage wichtige Dateien generiert, welche im folgenden aufgeführt sind.
+- `mobilityPredictionModel.sav` muss im aktuellen Arbeitsverzeichnis vorhanden sein
+- `districts.csv` muss im Verzeichnis `../data` relativ zum Arbeitsverzeichnis vorhanden sein
+- `mobilityData_complete.csv` muss im Verzeichnis `../data` relativ zum Arbeitsverzeichnis vorhanden sein
+- Es muss eine Internetverbindung zur Abfrage von aktuellen Wetterdaten vorhanden sein
+
+<br>
+
 # Methoden
 
 ## singlePredict(districtId, date)
 
 Liefert für eine übergebene `districtId` und ein `date` eine Besucherzahlenprognose für den jeweiligen Landkreis am entsprechenden Tag.
+Der abgefragte Tag darf nicht mehr als 10 Tage in der Zukunft liegen, da sonst die entsprechenden Wetterdaten zu unzuverlässig wären.
 <br>
 <br>
 
@@ -33,7 +44,7 @@ Pandas Dataframe mit einer einzelnen Zeile und folgenden Spalten:
 
 ## multiPredict(districtIds, startdate, enddate)
 
-Liefert für eine oder mehrere übergebene `districtIds` jeweils eine Vorhersage für jeden Landkreis und Tag im Zeitraum von `startdate` (einschließlich) und `enddate` (einschließlich).
+Liefert für eine oder mehrere übergebene `districtIds` jeweils eine Vorhersage für jeden Landkreis und Tag im Zeitraum von `startdate` (einschließlich) und `enddate` (einschließlich). Der abgefragte Zeitraum darf nicht mehr als 10 Tage in der Zukunft liegen, da sonst die entsprechenden Wetterdaten zu unzuverlässig wären.
 <br>
 <br>
 
@@ -56,11 +67,3 @@ Pandas Dataframe mit je einer Zeile pro Landkreis und Tag im Zeitraum und folgen
 <br>
 <br>
 <br>
-
-# Voraussetzungen
-
-- `mobility_train_model.py` muss mindestens ein Mal erfolgreich ausgeführt worden sein. Hierbei werden für die Vorhersage wichtige Dateien generiert, welche im folgenden aufgeführt sind.
-- `mobilityPredictionModel.sav` muss im aktuellen Arbeitsverzeichnis vorhanden sein
-- `districts.csv` muss im Verzeichnis `../data` relativ zum Arbeitsverzeichnis vorhanden sein
-- `mobilityData_complete.csv` muss im Verzeichnis `../data` relativ zum Arbeitsverzeichnis vorhanden sein
-- Es muss eine Internetverbindung zur Abfrage von aktuellen Wetterdaten vorhanden sein
