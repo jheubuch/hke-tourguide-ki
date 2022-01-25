@@ -229,6 +229,9 @@ def getFreeDays(year):
 
     return free_day_dates
 
+def getYearFromDatestring(date):
+    return date[-4:]
+
 def getHolidays(year):
     # Request free days from Feiertage API for year 2021 in bavaria
     holidays = requests.get(
@@ -312,7 +315,7 @@ districts.head()
 
 getWeatherData(dtf, districts)
 addWeatherData(dtf, districts)
-dtf.to_csv("../data/mobilityData_extended_weather.csv")
+# dtf.to_csv("../data/mobilityData_extended_weather.csv")
 print("Completed weather data preparation")
 
 
@@ -337,15 +340,17 @@ for k, v in Day_clusters.items():
 dtf[x+"_class"] = dtf['DoW'].apply(lambda x: dic_flat[x] if x in
                                 dic_flat.keys() else residual_class)
 
+year = getYearFromDatestring(dtf['Bucket'].iloc[0])
+
 # create dummies Day_class
 dummy = pd.get_dummies(dtf["Day_class"],
                     prefix="Day_class", drop_first=True)
 dtf = pd.concat([dtf, dummy], axis=1)
-freeDays = getFreeDays('2020')
+freeDays = getFreeDays(year)
 for day in freeDays:
     dtf.loc[(dtf.Bucket == day), 'Day_class_work'] = 0
 
-travellingDays = getTravellingDates('2020')
+travellingDays = getTravellingDates(year)
 dtf['Day_class_travel'] = 0
 for day in travellingDays:
     dtf.loc[(dtf.Bucket == day), 'Day_class_travel'] = 1
@@ -379,7 +384,7 @@ dtf.to_csv("../data/mobilityData_complete.csv")
 
 
 # Load extended data
-dtf = pd.read_csv("../data/data/mobilityData_complete.csv")
+dtf = pd.read_csv("../data/mobilityData_complete.csv")
 dtf.head()
 
 
