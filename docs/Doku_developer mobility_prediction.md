@@ -52,19 +52,19 @@ Lädt die gespeicherten Landkreisdaten aus der Datei `../data/districts.csv` in 
 
 ### Funktion
 
-Befüllt die DataFrames, für die eine Prognose erstellt werden soll, mit den zur
-Prognose benötigten Daten.
+Befüllt den DataFrame, für den eine Prognose erstellt werden soll, mit den zur
+Prognose benötigten Daten. Außerdem werden für die Prognose relevante Ausgabewerte direkt in den Prognosedataframe übernommen.
 
 ### Parameter
 
-| Parameter | Typ | Beschreibung |
-| --------- | --- | ------------ |
-| `dtf`        | `DataFrame`  | DataFrame, der alle Daten enthalten soll, die für die Prognose relevant sind. |
-| `predictions`        | `DataFrame`  | DataFrame, der die Prognoseergebnisse enthalten soll |
-| `disctricts`        | `DataFrame`  | DataFrame mit allen Landkreisen |
-| `districtId`        | `string`  | Landkreis-ID für den die Prognose erstellt werden soll |
-| `date`        | `string`  | Datum, für das die Prognose erstellt werden soll |
-| `datasetIndex`        | `int`  | Offset, Nummer der Prognose (Standard: `0`) |
+| Parameter      | Typ         | Beschreibung                                                                                                        |
+| -------------- | ----------- | ------------------------------------------------------------------------------------------------------------------- |
+| `dtf`          | `DataFrame` | DataFrame, der alle Daten enthalten soll, die für die Prognose relevant sind.                                       |
+| `predictions`  | `DataFrame` | DataFrame, der die Prognoseergebnisse enthalten soll                                                                |
+| `disctricts`   | `DataFrame` | DataFrame mit allen Landkreisen                                                                                     |
+| `districtId`   | `string`    | Landkreis-ID für den die Prognose erstellt werden soll                                                              |
+| `date`         | `string`    | Datum, für das die Prognose erstellt werden soll                                                                    |
+| `datasetIndex` | `int`       | Zeile des Dataframes, in welche die Daten eingetragen werden sollen, entspricht Nummer der Prognose (Standard: `0`) |
 
 ### Rückgabe
 
@@ -74,15 +74,15 @@ Tupel mit gefüllten DataFrames `dtf, predictions`
 
 ### Funktion
 
-Die Funktion `predict` erstellt die tatsächliche Prognose aufgrund der gegebenen
+Erstellt die tatsächliche Prognose aufgrund der gegebenen
 Daten. Hierfür wird das trainierte Model geladen und eine Vorhersage mittels
 gegebener Daten getroffen.
 
 ### Parameter
 
-| Parameter | Typ | Beschreibung |
-| --------- | --- | ------------ |
-| `dtf`        | `DataFrame`  | Dataframe mit allen, zur Vorhersage benötigten Daten |
+| Parameter | Typ         | Beschreibung                                         |
+| --------- | ----------- | ---------------------------------------------------- |
+| `dtf`     | `DataFrame` | Dataframe mit allen, zur Vorhersage benötigten Daten |
 
 ### Rückgabe
 
