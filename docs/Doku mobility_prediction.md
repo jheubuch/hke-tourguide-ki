@@ -26,7 +26,7 @@ Der abgefragte Tag darf nicht mehr als 10 Tage in der Zukunft liegen, da sonst d
 | Parameter    | Typ      | Beschreibung                                                                                                                           |
 | ------------ | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | `districtId` | `int`    | Landkreis-ID des Landkreises für den eine Prognose erstellt werden soll. (Entspricht `EndId` bzw. `StartId` aus den Terralytics-Daten) |
-| `date`       | `string` | Datum (`TT-MM-YYYY`) des Tages für den eine Pronose erstellt werden soll                                                               |
+| `date`       | `string` | Datum (`YYYY-MM-DD`) des Tages für den eine Pronose erstellt werden soll                                                               |
 
 <br>
 
@@ -51,8 +51,8 @@ Liefert für eine oder mehrere übergebene `districtIds` jeweils eine Vorhersage
 | Parameter     | Typ      | Beschreibung                                                                                                                                    |
 | ------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | `districtIds` | `int[]`  | Liste von Landkreis-IDs der Landkreise für die Prognosen erstellt werden sollen. (Entsprechen `EndId` bzw. `StartId` aus den Terralytics-Daten) |
-| `startdate`   | `string` | Datum (`TT-MM-YYYY`) des ersten Tages für den eine Pronose erstellt werden soll                                                                 |
-| `enddate`     | `string` | Datum (`TT-MM-YYYY`) des letzten Tages für den eine Pronose erstellt werden soll                                                                |
+| `startdate`   | `string` | Datum (`YYYY-MM-DD`) des ersten Tages für den eine Pronose erstellt werden soll                                                                 |
+| `enddate`     | `string` | Datum (`YYYY-MM-DD`) des letzten Tages für den eine Pronose erstellt werden soll                                                                |
 
 <br>
 
