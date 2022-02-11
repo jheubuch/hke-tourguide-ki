@@ -21,6 +21,8 @@ Generiert einen `Dataframe`, welcher die selben Spalten enthält wie der Datafra
 ### Rückgabe
 
 `Dataframe` mit entsprechenden Spalten um Prognose durch Model erstellen zu lassen und `numberOfRows` Zeilen (alle Werte `= 0`)
+<br>
+<br>
 
 ## getReturnDataStructure(numberOfRows)
 
@@ -37,6 +39,8 @@ Generiert einen `Dataframe`, welcher die Spalten enthält die als Ausgabewerte e
 ### Rückgabe
 
 `Dataframe` mit entsprechenden Spalten für Informationen rund um die Prognose und `numberOfRows` Zeilen (alle Werte `= 0`)
+<br>
+<br>
 
 ## getSavedDistricts()
 
@@ -47,6 +51,8 @@ Lädt die gespeicherten Landkreisdaten aus der Datei `../data/districts.csv` in 
 ### Rückgabe
 
 `Dataframe` mit gespeicherten Landkreisdaten.
+<br>
+<br>
 
 ## addPredictionDataset(dtf, predictions, districts, districtId, date, datasetIndex)
 
@@ -69,6 +75,8 @@ Prognose benötigten Daten. Außerdem werden für die Prognose relevante Ausgabe
 ### Rückgabe
 
 Tupel mit gefüllten DataFrames `dtf, predictions`
+<br>
+<br>
 
 ## predict(dtf)
 
