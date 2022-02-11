@@ -44,24 +44,39 @@ Im Folgenden wird die Verwendung der von `SinglePredict()` und `MultiPredict()` 
 
 ### Funktion
 
+Befüllt die DataFrames, für die eine Prognose erstellt werden soll, mit den zur
+Prognose benötigten Daten.
+
 ### Parameter
 
 | Parameter | Typ | Beschreibung |
 | --------- | --- | ------------ |
-| ``        | ``  | Bla          |
-| ``        | ``  | Bla          |
+| `dtf`        | `DataFrame`  | DataFrame, der alle Daten enthalten soll, die für die Prognose relevant sind. |
+| `predictions`        | `DataFrame`  | DataFrame, der die Prognoseergebnisse enthalten soll |
+| `disctricts`        | `DataFrame`  | DataFrame mit allen Landkreisen |
+| `districtId`        | `string`  | Landkreis-ID für den die Prognose erstellt werden soll |
+| `date`        | `string`  | Datum, für das die Prognose erstellt werden soll |
+| `datasetIndex`        | `int`  | Offset, Nummer der Prognose (Standard: `0`) |
 
 ### Rückgabe
+
+Tupel mit gefüllten DataFrames `dtf, predictions`
 
 ## predict(dtf)
 
 ### Funktion
 
+Die Funktion `predict` erstellt die tatsächliche Prognose aufgrund der gegebenen
+Daten. Hierfür wird das trainierte Model geladen und eine Vorhersage mittels
+gegebener Daten getroffen.
+
 ### Parameter
 
 | Parameter | Typ | Beschreibung |
 | --------- | --- | ------------ |
-| ``        | ``  | Bla          |
-| ``        | ``  | Bla          |
+| `dtf`        | `DataFrame`  | Dataframe mit allen, zur Vorhersage benötigten Daten |
 
 ### Rückgabe
+
+Es wird ein `int` zurückgegeben. Dieser Wert entspricht der prognostizierten
+Besucherzahl.
