@@ -10,35 +10,43 @@ Im Folgenden wird die Verwendung der von `SinglePredict()` und `MultiPredict()` 
 
 ### Funktion
 
+Generiert einen `Dataframe`, welcher die selben Spalten enthält wie der Dataframe welcher zum Training des Models verwendet wurde (was einem `Dataframe` entspricht, für den das Trainierte Model eine Prognose erstellen kann). Hierfür muss die Datei `../data/mobilityData_complete.csv` vorhanden sein, um die entsprechenden Spalten extrahieren zu können.
+
 ### Parameter
 
-| Parameter | Typ | Beschreibung |
-| --------- | --- | ------------ |
-| ``        | ``  | Bla          |
-| ``        | ``  | Bla          |
+| Parameter      | Typ   | Beschreibung                                                                                                            |
+| -------------- | ----- | ----------------------------------------------------------------------------------------------------------------------- |
+| `numberOfRows` | `int` | Gibt an, wie viele Zeilen der zurückzugebende Dataframe erhalten soll (entspricht Anzahl der zu erstellenden Prognosen) |
 
 ### Rückgabe
+
+`Dataframe` mit entsprechenden Spalten um Prognose durch Model erstellen zu lassen und `numberOfRows` Zeilen (alle Werte `= 0`)
 
 ## getReturnDataStructure(numberOfRows)
 
 ### Funktion
 
+Generiert einen `Dataframe`, welcher die Spalten enthält die als Ausgabewerte einer Prognose relevant sind. Denkbar sind hierfür Werte wie Datum, Besucheranzahl, Landkreisname, Höchsttemperatur, Niederschlag etc.
+
 ### Parameter
 
-| Parameter | Typ | Beschreibung |
-| --------- | --- | ------------ |
-| ``        | ``  | Bla          |
-| ``        | ``  | Bla          |
+| Parameter      | Typ   | Beschreibung                                                                                                            |
+| -------------- | ----- | ----------------------------------------------------------------------------------------------------------------------- |
+| `numberOfRows` | `int` | Gibt an, wie viele Zeilen der zurückzugebende Dataframe erhalten soll (entspricht Anzahl der zu erstellenden Prognosen) |
 
 ### Rückgabe
+
+`Dataframe` mit entsprechenden Spalten für Informationen rund um die Prognose und `numberOfRows` Zeilen (alle Werte `= 0`)
 
 ## getSavedDistricts()
 
 ### Funktion
 
-### Parameter
+Lädt die gespeicherten Landkreisdaten aus der Datei `../data/districts.csv` in einen `Dataframe`.
 
 ### Rückgabe
+
+`Dataframe` mit gespeicherten Landkreisdaten.
 
 ## addPredictionDataset(dtf, predictions, districts, districtId, date, datasetIndex)
 
